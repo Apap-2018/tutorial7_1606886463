@@ -2,20 +2,58 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Home</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
 <body>
-    <h1>Hello!</h1>
-    <h3>Tambah Pilot</h3>
-    <td><a th:href="@{/pilot/add}">Tambah</a></td>
-        <h3>Lihat Semua Penerbangan</h3>
-    <td><a th:href="@{/flight/view/all}">Lihat</a></td>
-    
+<nav th:replace="fragments/fragment :: navbar"></nav>
+     <div class="container-fluid">
+        <h1>Hello!</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Tambah Pilot
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Fitur untuk menambah pilot</p>
+                        <a class="btn btn-primary" th:href="@{/pilot/add}">Tambah</a>
+                    </div>
+                </div>
+            </div>
 
-    <h3>Cari pilot berdasarkan nomor lisensi</h3>
-    <form th:action="@{/pilot/view}" method="GET">
-        <label>License Number:</label>
-        <input type="text" name="licenseNumber" />
-        <button type="submit">Cari!</button>
-    </form>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Lihat Semua Penerbangan
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Fitur untuk melihat penerbangan</p>
+                        <a class="btn btn-primary" th:href="@{/flight/view/all}">Lihat</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Cari pilot berdasarkan nomor lisensi
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/pilot/view}" method="GET">
+                            <label for="licenseNumber">License Number</label>
+                            <input id="licenseNumber" type="text" name="licenseNumber" class="form-control">
+                            <input type="submit" class="btn btn-primary mt-2" value="Cari">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

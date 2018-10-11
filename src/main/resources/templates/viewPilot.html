@@ -2,8 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title th:text="${pilot.licenseNumber}"></title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
 <body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
     <h3 th:text="'Pilot License Number : ' + ${pilot.licenseNumber}"></h3>
     <h3 th:text="'Name :' + ${pilot.name}"></h3>
     <h3 th:text="'Fly Hour: ' + ${pilot.flyHour}"></h3>
@@ -11,6 +14,7 @@
     <h2>Flights</h2>
     <table style="width:100%">
     <tr>
+    <th>No</th>
     <th>Flight Number</th>
     <th>Origin</th> 
     <th>Destination</th>
@@ -18,7 +22,8 @@
     <th>Pilot</th>
     <th>Pilot License</th>
   </tr>
-<tr style="text-align:center;" th:each="flight: ${pilot.getPilotFlight()}">
+<tr style="text-align:center;" th:each="flight,iterStatus: ${pilot.getPilotFlight()}">
+	<td th:text="${iterStatus.count}" />
     <td th:text="${flight.flightNumber}" />
     <td th:text="${flight.origin}" />
     <td th:text="${flight.destination}" />

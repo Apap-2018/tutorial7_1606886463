@@ -20,24 +20,28 @@ private PilotService pilotService;
 
 
 @RequestMapping("/")
-private String home() {
+private String home(Model model) {
+	model.addAttribute("title", "Home");
 	return "home";
 }
 
 @RequestMapping(value = "/pilot/add", method= RequestMethod.GET)
 private String add(Model model) {
+	model.addAttribute("title", "Add Pilot");
 	model.addAttribute("pilot",new PilotModel());
 	return "addPilot";
 }
 
 @RequestMapping(value= "/pilot/add", method= RequestMethod.POST)
-private String addPilotSubmit(@ModelAttribute PilotModel pilot) {
+private String addPilotSubmit(@ModelAttribute PilotModel pilot,Model model) {
+	model.addAttribute("title", "Add Pilot");
 	pilotService.addPilot(pilot);
 	return "add";
 }
 
 @RequestMapping(value= "/pilot/update/{licenseNumber}", method= RequestMethod.GET)
 private String updatePilot(@PathVariable(value="licenseNumber") String licenseNumber, Model model) {
+	model.addAttribute("title", "Update Pilot");
 	PilotModel upd = pilotService.getPilotDetailByLicenseNumber(licenseNumber);
 	model.addAttribute("pilot",upd);
 	return "updatePilot";
@@ -45,6 +49,7 @@ private String updatePilot(@PathVariable(value="licenseNumber") String licenseNu
 
 @RequestMapping(value= "/pilot/update/{licenseNumber}", method= RequestMethod.POST)
 private String updatePilotSubmit(@PathVariable(value="licenseNumber") String licenseNumber, @ModelAttribute PilotModel pilot,Model model) {
+		model.addAttribute("title", "Update Pilot");
 		pilotService.getPilotDetailByLicenseNumber(pilot.getLicenseNumber()).setName(pilot.getName());
 		pilotService.getPilotDetailByLicenseNumber(pilot.getLicenseNumber()).setFlyHour(pilot.getFlyHour());
 		System.out.println(pilotService.getPilotDetailByLicenseNumber(pilot.getLicenseNumber()).getFlyHour());
@@ -53,7 +58,8 @@ private String updatePilotSubmit(@PathVariable(value="licenseNumber") String lic
 }
 
 @RequestMapping(value= "/pilot/delete/{id}")
-private String deletePilotSubmit(@PathVariable(value="id") long id) {
+private String deletePilotSubmit(@PathVariable(value="id") long id,Model model) {
+	model.addAttribute("title", "Delete Pilot");
 	pilotService.removePilot(id);
 	return "deleted";
 }
@@ -61,6 +67,7 @@ private String deletePilotSubmit(@PathVariable(value="id") long id) {
 @RequestMapping(value= "/pilot/view", method= RequestMethod.GET)
 private String addPilotSubmit(@RequestParam(value = "licenseNumber") String licenseNumber, Model model) {
 	PilotModel pilot = pilotService.getPilotDetailByLicenseNumber(licenseNumber);
+	model.addAttribute("title", "Pilot: "+pilot.getName());
 	model.addAttribute("pilot",pilot);
 	return "viewPilot";
 }
