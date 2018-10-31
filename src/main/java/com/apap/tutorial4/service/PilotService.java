@@ -4,6 +4,8 @@ import com.apap.tutorial4.model.PilotModel;
 
 public interface PilotService {
 PilotModel getPilotDetailByLicenseNumber(String licenseNumber);
-void addPilot(PilotModel pilot);
+PilotModel getPilotDetailById(long id);
+PilotModel addPilot(PilotModel pilot);
+void updatePilot(PilotModel pilot);
 void removePilot(long pilot);
 }

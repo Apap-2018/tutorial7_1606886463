@@ -2,6 +2,7 @@ package com.apap.tutorial4.model;
 import java.io.Serializable;
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,9 +19,12 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name="flight")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class FlightModel implements Serializable {
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY)
@@ -55,7 +59,6 @@ public class FlightModel implements Serializable {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="pilot_licenseNumber", referencedColumnName = "license_number", nullable = false)
 	@OnDelete(action=OnDeleteAction.NO_ACTION)
-	@JsonIgnore
 	private PilotModel pilotFlight;
 
 	public long getId() {
@@ -89,11 +92,11 @@ public class FlightModel implements Serializable {
 	public void setDestination(String destination) {
 		this.destination = destination;
 	}
-
+	@JsonIgnore
 	public PilotModel getPilotFlight() {
 		return pilotFlight;
 	}
-
+    @JsonProperty("pilotFlight")
 	public void setPilotFlight(PilotModel pilotFlight) {
 		this.pilotFlight = pilotFlight;
 	} }

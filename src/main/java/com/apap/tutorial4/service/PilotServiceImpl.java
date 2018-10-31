@@ -20,13 +20,27 @@ public class PilotServiceImpl implements PilotService {
 	}
 	
 	@Override
-	public void addPilot (PilotModel pilot) {
+	public PilotModel getPilotDetailById(long id) {
+		return pilotDb.findById(id);
+	}
+	
+	@Override
+	public PilotModel addPilot (PilotModel pilot) {
 		pilotDb.save(pilot);
+		return pilot;
 	}
 	
 	@Override
 	public void removePilot (long pilot) {
 		pilotDb.deleteById(pilot);
+	}
+	
+	@Override
+	public void updatePilot(PilotModel pilot) {
+	    PilotModel pilotUpdate = pilotDb.getOne(pilot.getId());
+	    pilotUpdate.setFlyHour(pilot.getFlyHour());
+	    pilotUpdate.setName(pilot.getName());
+	    pilotDb.save(pilotUpdate);
 	}
 
 
